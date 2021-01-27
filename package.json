@@ -1,0 +1,20 @@
+{
+  "name": "tatsumiko-modular",
+  "version": "1.0.34",
+  "description": "Herramienta para facilitar la creacion de comandos moulares  para discord en español",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "doc":"jsdoc -c jsdoc.json"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "modular"
+  ],
+  "author": "OnlyD",
+  "license": "ISC",
+  "dependencies": {
+    "jsdoc": "^3.6.6"
+  }
+}
