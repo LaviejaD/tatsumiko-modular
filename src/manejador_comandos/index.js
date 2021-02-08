@@ -36,7 +36,7 @@ class Tatsumiko {
 	/** guarda los comandos 
 	 */
 	mapcmd() {
-		let util = require("../util/util.js")
+		let propiedades = require("../util/propiedades.js")
 		let path = require("path")
 		let fs = require("fs")
 		let files = fs.readdirSync(this.dir)
@@ -50,13 +50,13 @@ class Tatsumiko {
 				let fc = require(path.join(this.dir, f))
 
 
-				if (util.comprobarpropiedades(fc)) {
-					this.map.set(fc.name, fc);
+				if (propiedades(fc)) {
+					
 
-					if (this.map.get(fc.name)) {
+					if (this.map.get(fc.name)===undefined) {
 						this.map.set(fc.name, fc);
 					} else {
-						let error = new Error("ya existe un comando con el mismo nombre")
+						let error = new Error(`ya existe un comando con el mismo nombre en: ${path.join(this.dir, f)}`)
 						throw error
 					}
 				}

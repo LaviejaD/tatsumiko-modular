@@ -1,4 +1,4 @@
-const util = require("../util/util")
+const enviarmensaje = require("../util/enviarmensaje.js")
 
 /** verifica si es un desarrollador del bot para usar el comando
  * @param  {Function} message necesita el objecto message de discord.js
@@ -23,23 +23,44 @@ const isowver = (message, owners) => {
 /**verifica los argumentos
  */
 const checkargs = (message, cmd, args) => {
-	if (args.length === cmd.arguments.number_arguments) {
+	let argsneedcheck = require("./argsneedcheck")
 
-	} else {
-		util.enviarmensaje(message, "faltan argumentos")
+	if (cmd.arguments.arguments === 0) {
+		return true
 	}
-}
-
-const checkperms = (message, cmd) => {
-	let booleam = true
-	let i = 0
-	while (i <= cmd.haspermission.length - 1) {
-		if (!message.member.hasPermission(cmd.haspermission[i])) {
-			booleam = false
+	else {
+		if (cmd.arguments.arguments === args.length) {
+			console.log(" XD");
+			if (argsneedcheck(cmd, args, message)) {
+				return true
+			} else {
+				return false
+			}
+		}
+		if (cmd.arguments.arguments > args.length) {
+			enviarmensaje(message, "no se pudo ejecutar el comando por que me  faltan de argumentos")
+			return false
+		}
+		if (cmd.arguments.arguments <= args.length) {
+			enviarmensaje(message, "enviaste mas argumentos de lo necesario")
+			return false
 		}
 	}
 
-	return booleam
+}
+
+const checkperms = (message, cmd) => {
+	let check = true
+
+	for (let index = 0; index < cmd.haspermission.length; index++) {
+		if (!message.member.hasPermission(cmd.haspermission[index])) {
+			check = false
+			break
+		}
+
+	}
+
+	return check
 }
 
 const existcmd = (map, command) => {
@@ -51,9 +72,8 @@ const existcmd = (map, command) => {
 	} else {
 		map.forEach(cmd => {
 
-
-
 			for (let index = 0; index < cmd.alise.length; index++) {
+
 				let element = cmd.alise[index];
 
 				if (element === command) {
@@ -68,24 +88,24 @@ const existcmd = (map, command) => {
 		)
 	}
 
-
-
-
 	return comando
 
 }
 const botpermisos = (client, command, message) => {
-	let permisosfaltante = []
+	let check = true
 
-	command.haspermission.forEach((item) => {
 
-		if (!message.guild.member(client.user).hasPermission(item)) {
-			permisosfaltante.push(item)
+	for (let index = 0; index < command.haspermission.length; index++) {
+
+		if (!message.guild.member(client.user).hasPermission(command.haspermission[index])) {
+			check = false
+			break
 		}
-	});
 
-	if (permisosfaltante) {
-		util.enviarmensaje(message, `me faltan permisos permisos  ${(permisosfaltante.toString()).replace(/,/g, " ")}`)
+	}
+
+	if (!check) {
+		enviarmensaje(message, `me faltan permisos permisos  para ejecutar este comando`)
 		return false
 	}
 	else {
@@ -95,7 +115,7 @@ const botpermisos = (client, command, message) => {
 
 
 }
-const manejador = (map, command, message, client, args, owners) => {
+const manejador = async (map, command, message, client, args, owners) => {
 
 	const cmd = existcmd(map, command)
 
@@ -105,24 +125,27 @@ const manejador = (map, command, message, client, args, owners) => {
 
 			if (isowver(message, owners)) {
 
-				cmd.run(client, message, args, map)
+				return cmd.run(client, message, args, map)
 
 			}
 			else {
-				util.enviarmensaje(message, "solo los desarrolladores pueden usar este comando")
+				enviarmensaje(message, "solo los desarrolladores pueden usar este comando")
 			}
 		}
 		else {
 			if (checkperms(message, cmd)) {
-				if (botpermisos(client, command, message)) {
-					if (checkargs(message, command, args)) {
 
-					} else {
+				if (botpermisos(client, cmd, message)) {
 
+
+					if (checkargs(message, cmd, args)) {
+					await	cmd.run(client, message, args, map)
 					}
+
 				}
-			} else {
-				util.enviarmensaje(message, "No tienes suficiente permisos para usar este comando")
+			}
+			else {
+				enviarmensaje(message, "No tienes suficiente permisos para usar este comando")
 			}
 		}
 	}
