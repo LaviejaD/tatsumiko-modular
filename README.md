@@ -5,7 +5,7 @@ ___
 > npm i tatsumiko-modular
 ### Requimentos 
 
-<<<<<<< HEAD
+
 
 - [node v12.18.0 o superior](https://nodejs.org/es/)
 
