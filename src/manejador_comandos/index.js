@@ -1,3 +1,7 @@
+const path = require("path")
+const fs = require("fs");
+const propiedades = require("../util/propiedades.js")
+
 class Tatsumiko {
 	/**  classs Tatsumiko 	  
 	 * @constructor
@@ -6,7 +10,7 @@ class Tatsumiko {
 	 * @param  {Array<string>} ownersid array de las id de los desarrolladores del bot
 	 */
 	constructor(dirname, dir, ownersid) {
-		let path = require("path")
+		
 
 		this.ownersid = ownersid;
 		/**
@@ -23,7 +27,7 @@ class Tatsumiko {
 	 */
 	check_dir() {
 
-		let fs = require("fs");
+		
 		if (fs.existsSync(this.dir)) {
 			this.mapcmd()
 		} else {
@@ -33,12 +37,11 @@ class Tatsumiko {
 		}
 
 	}
-	/** guarda los comandos 
+	/** guarda los comandos en un map
 	 */
 	mapcmd() {
-		let propiedades = require("../util/propiedades.js")
-		let path = require("path")
-		let fs = require("fs")
+		
+		
 		let files = fs.readdirSync(this.dir)
 
 

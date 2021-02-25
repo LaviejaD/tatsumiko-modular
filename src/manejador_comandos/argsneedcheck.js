@@ -1,4 +1,3 @@
-
 module.exports = (cmd, args, message) => {
 
 	const  enviarmensaje  = require("../util/enviarmensaje")
@@ -19,6 +18,7 @@ module.exports = (cmd, args, message) => {
 				console.log(message.mentions.has(mention[1]));
 				enviarmensaje(message, "Necesito que menciones a alguien")
 				valit = false
+				break
 				
 			}
 
@@ -33,7 +33,7 @@ module.exports = (cmd, args, message) => {
 						
 				enviarmensaje(message, "Necesito que menciones un canal de texto")
 				valit = false
-				
+			break			
 			}
 		}
 		

@@ -5,7 +5,7 @@ ___
 > npm i tatsumiko-modular
 ### Requimentos 
 
-<<<<<<< HEAD
+
 
 - [node v12.18.0 o superior](https://nodejs.org/es/)
 
@@ -94,6 +94,3 @@ module.exports = {
 ## Contactame
 ### me puedes contactar por
 - [Servidor de discord](https://discord.gg/5VdmymWGFJ)
-=======
-## Herramienta para facilitar la creacion de comandos moulares  para bot de discord en español en dessarollo
->>>>>>> 991cf0ae63072d93e2d50b5a136495f55f6ee353

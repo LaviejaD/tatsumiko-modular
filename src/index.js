@@ -1,1 +1,1 @@
-module.exports = { Tatsumiko: require("./manejador_comandos/index") } 
+module.exports = { Tatsumiko: require("./manejador_comandos/index") }
