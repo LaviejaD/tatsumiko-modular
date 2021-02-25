@@ -93,4 +93,8 @@ module.exports = {
 
 ## Contactame
 ### me puedes contactar por
+<<<<<<< HEAD
 - [Servidor de discord](https://discord.gg/5VdmymWGFJ)
+=======
+- [Servidor de discord](https://discord.gg/5VdmymWGFJ)
+>>>>>>> b6b30a3ce4ce3999df87b1c7592e7809788f8f58
