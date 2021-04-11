@@ -1,6 +1,6 @@
 const path = require("path")
 const fs = require("fs");
-const propiedades = require("../util/propiedades.js")
+const propiedades = require("../util/propiedadescomando.js")
 
 class Tatsumiko {
 	/**  classs Tatsumiko 	  
@@ -10,7 +10,7 @@ class Tatsumiko {
 	 * @param  {Array<string>} ownersid array de las id de los desarrolladores del bot
 	 */
 	constructor(dirname, dir, ownersid) {
-		
+
 
 		this.ownersid = ownersid;
 		/**
@@ -27,7 +27,7 @@ class Tatsumiko {
 	 */
 	check_dir() {
 
-		
+
 		if (fs.existsSync(this.dir)) {
 			this.mapcmd()
 		} else {
@@ -40,29 +40,29 @@ class Tatsumiko {
 	/** guarda los comandos en un map
 	 */
 	mapcmd() {
-		
-		
+
 		let files = fs.readdirSync(this.dir)
 
+		files.forEach(file => {
 
-		files.forEach(f => {
+			if (file.endsWith(".js")) {
+				
+
+				let filecomand = require(path.join(this.dir, file))
+				//console.log(Filecomand.name);
 
 
-			if (f.endsWith(".js")) {
-
-				let fc = require(path.join(this.dir, f))
+				if (propiedades(filecomand, this.dir, file)) {
 
 
-				if (propiedades(fc)) {
-					
-
-					if (this.map.get(fc.name)===undefined) {
-						this.map.set(fc.name, fc);
+					if (this.map.get(filecomand.name) === undefined) {
+						this.map.set(filecomand.name, filecomand);
 					} else {
-						let error = new Error(`ya existe un comando con el mismo nombre en: ${path.join(this.dir, f)}`)
+						let error = new Error(`ya existe un comando con el mismo nombre en: ${path.join(this.dir, file)}`)
 						throw error
 					}
 				}
+
 
 			}
 		})
@@ -75,14 +75,15 @@ class Tatsumiko {
 	commands(client, message, prefix) {
 
 		if (message.author.bot) { return }
+
 		else {
 			if (message.content.startsWith(prefix)) {
 				let args = message.content.slice(prefix.length).trim().split(/ +/g)
 				let command = args.shift().toLowerCase()
 
-				const manejador = require("./manejador.js")
+				let Manejador = require("./manejador.js")
+				new Manejador(this.map, command, message, client, args, this.ownersid)
 
-				manejador(this.map, command, message, client, args, this.ownersid)
 
 			}
 		}

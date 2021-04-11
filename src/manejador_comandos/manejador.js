@@ -1,4 +1,3 @@
-
 const enviarmensaje = require("../util/enviarmensaje.js")
 
 class Manejador {
@@ -10,7 +9,7 @@ class Manejador {
 	 * @param  {} client	el cliente de discord
 	 * @param  {Array<string>} args	los argumentos del bot
 	 * @param  {Array<string>} owners	array con las id de los desarrolladores del bot
-	 * @param  {} answers
+	 * @param  {Array<string>} answers
 	 */
 	constructor(map, command, message, client, args, owners, answers) {
 		this.map = map
@@ -19,23 +18,26 @@ class Manejador {
 		this.client = client
 		this.args = args
 		this.owners = owners
-		this.answers = answers 
+		this.answers = answers
 
 		this.comando = this.existcmd()
 
 		if (this.comando) {
 			if (this.comando.owneronly) {
-				this.star()
-			} else {
+
+				if (this.isowner()) {
+					this.star()
+				}
+
+			}
+			else {
 				this.star()
 			}
 		}
 	}
-	Answers(){
-		
-	}
+
 	existcmd() {
-		let comando = this.map.get(command)
+		let comando = this.map.get(this.command)
 		if (comando) {
 			return comando
 		}
@@ -75,56 +77,53 @@ class Manejador {
 	checkperms() {
 		let check = true
 
-	for (let index = 0; index < this.comando.haspermission.length; index++) {
-		if (!this.message.member.hasPermission(this.comando.haspermission[index])) {
-			check = false
-			break
+		for (let index = 0; index < this.comando.haspermission.length; index++) {
+			if (!this.message.member.hasPermission(this.comando.haspermission[index])) {
+				check = false
+				break
+			}
+
 		}
 
-	}
-
-	return check
+		return check
 
 	}
-	botpermisos(){
+	botpermisos() {
 		let check = true
-		
-		
+
+
 		for (let index = 0; index < this.comando.haspermission.length; index++) {
-	
+
 			if (!this.message.guild.member(client.user).hasPermission(this.comando.haspermission[index])) {
 				check = false
 				break
 			}
-	
+
 		}
-	
+
 		if (!check) {
-			enviarmensaje(message, this.answers.faltadepermisosBot)
+			enviarmensaje(this.message, this.answers.faltadepermisosBot)
 			return false
 		}
 		else {
 			return true
-	
- }
-	 }
+
+		}
+	}
 	star() {
-		if (this.checkperms(message, cmd)) {
+		if (this.checkperms(this.message,this.comando)) {
 
-			if (this.botpermisos(client, cmd, message)) {
+			if (this.botpermisos(this.client, this.comando, this.message)) {
 
 
-				if (checkargs(message, cmd, args)) {
-					await cmd.run(client, message, args, map)
-				}
-
+				this.comando.run(this.client, this.message, this.args, this.map)
 			}
 		}
 		else {
-			enviarmensaje(message, this.answers.faltadepermisosUsuario)
+			enviarmensaje(this.message, this.answers.faltadepermisosUsuario)
 		}
-		
-		
+
+
 	}
 }
 

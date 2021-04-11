@@ -6,6 +6,7 @@ module.exports = (cmd, args, message) => {
 	
 
 	for (let index = 0; index < cmd.arguments.argumentsneed.length; index++) {
+		
 		const element = cmd.arguments.argumentsneed[index];
 		
 		
