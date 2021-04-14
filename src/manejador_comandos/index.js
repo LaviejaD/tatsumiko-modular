@@ -1,7 +1,9 @@
 const path = require("path")
 const fs = require("fs");
 const propiedades = require("../util/propiedadescomando.js")
-
+const cooldown = require("../util/cooldown")
+const answers = require("../util/answers");
+const asnswers = require("../util/answers");
 class Tatsumiko {
 	/**  classs Tatsumiko 	  
 	 * @constructor
@@ -22,6 +24,12 @@ class Tatsumiko {
 		 */
 		this.map = new Map();
 		this.check_dir();
+
+		this.cooldownset = new Set()
+
+		this.answersxd = answers()
+		
+		//console.log(this.answersxd);
 	}
 	/** verifica la ubicacion de la carpeta de los comandos regresa error si la carpeta no se encuentra o no existe
 	 */
@@ -48,7 +56,8 @@ class Tatsumiko {
 			if (file.endsWith(".js")) {
 				
 
-				let filecomand = require(path.join(this.dir, file))
+				let Filecomand = require(path.join(this.dir, file))
+				let filecomand= new Filecomand()
 				//console.log(Filecomand.name);
 
 
@@ -68,8 +77,19 @@ class Tatsumiko {
 		})
 	}
 	/**
+	 * @param  {Object} req aqui estas todos los string  XD
+	 */
+	answers(req){
+		this.answersxd =asnswers(req)
+		console.log(this.answersxd);
+	}
+	cooldown(){
+		this.cooldowntrue = true
+	}
+	/**
 	 * @param  {Function} client se necesita  el client de discord 
-	 * @param  {Function} message se necesita pasar discord.message
+	 * @param  {Object} message se necesita pasar discord.message
+	 * @param {string}message.content
 	 * @param  {string} prefix el prefijo de los comandos
 	 */
 	commands(client, message, prefix) {
@@ -78,11 +98,15 @@ class Tatsumiko {
 
 		else {
 			if (message.content.startsWith(prefix)) {
+				/**aasdasd
+				 * @param {Array<string>} args
+				 */
 				let args = message.content.slice(prefix.length).trim().split(/ +/g)
 				let command = args.shift().toLowerCase()
 
 				let Manejador = require("./manejador.js")
-				new Manejador(this.map, command, message, client, args, this.ownersid)
+			    let comando =new Manejador(this.map, command, message, client, args, this.ownersid,this.answersxd).comando
+				console.log(comando.name);
 
 
 			}

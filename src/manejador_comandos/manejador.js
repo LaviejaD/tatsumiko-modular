@@ -1,5 +1,6 @@
 const enviarmensaje = require("../util/enviarmensaje.js")
 
+
 class Manejador {
 	/** Maneja lo que Tatsumiko no puede
 	 * @constructor
@@ -9,7 +10,7 @@ class Manejador {
 	 * @param  {} client	el cliente de discord
 	 * @param  {Array<string>} args	los argumentos del bot
 	 * @param  {Array<string>} owners	array con las id de los desarrolladores del bot
-	 * @param  {Array<string>} answers
+	 * @param  {Object} answers
 	 */
 	constructor(map, command, message, client, args, owners, answers) {
 		this.map = map
@@ -20,6 +21,8 @@ class Manejador {
 		this.owners = owners
 		this.answers = answers
 
+		console.log(this.answers);
+
 		this.comando = this.existcmd()
 
 		if (this.comando) {
@@ -27,11 +30,13 @@ class Manejador {
 
 				if (this.isowner()) {
 					this.star()
+					
 				}
 
 			}
 			else {
 				this.star()
+				
 			}
 		}
 	}
@@ -47,7 +52,7 @@ class Manejador {
 
 					let element = cmd.alise[index];
 
-					if (element === command) {
+					if (element === this.command) {
 						comando = cmd
 					}
 
@@ -76,7 +81,7 @@ class Manejador {
 	}
 	checkperms() {
 		let check = true
-
+		
 		for (let index = 0; index < this.comando.haspermission.length; index++) {
 			if (!this.message.member.hasPermission(this.comando.haspermission[index])) {
 				check = false
@@ -94,7 +99,7 @@ class Manejador {
 
 		for (let index = 0; index < this.comando.haspermission.length; index++) {
 
-			if (!this.message.guild.member(client.user).hasPermission(this.comando.haspermission[index])) {
+			if (!this.message.guild.member(this.client.user).hasPermission(this.comando.haspermission[index])) {
 				check = false
 				break
 			}
@@ -116,7 +121,7 @@ class Manejador {
 			if (this.botpermisos(this.client, this.comando, this.message)) {
 
 
-				this.comando.run(this.client, this.message, this.args, this.map)
+				///this.comando.run(this.client, this.message, this.args)
 			}
 		}
 		else {

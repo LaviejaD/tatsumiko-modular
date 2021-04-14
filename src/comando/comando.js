@@ -1,32 +1,29 @@
 const enviarmensaje = require("../util/enviarmensaje")
 
+
 class Tatsumikoclass {
 	/**
 	 * Constructor para crear comandos modulares 
 	 * @constructor
 	 * @param  {string} name El nombre del comando no puede tener Espacios en el nombre puede que de error el comando
-	 * @param  {string} description La descripción
+	 
 	 * @param  {Array<string>} alise 
 	 * @param  {Array<string>  } haspermission verifica si el bot y el usuario tienen los permisos necesarios  [ https://discord.com/developers/docs/topics/permissions ]
 	 * @param {Object[]} argument verifica los argumentos 
 	 * @param {number} argument.place se empieza a contar de 0 a 1 para vereficar si en lugar esta lo deseado 
 	 * @param {string}argument.type "channel", "role" , "mention" 
 	 * @param {string}argument.response envia una respuesta si no se en cuentra los argumentos deseados
+	 * @param {string} argumenterror envia una respuesta si los args no existen
 	 * @param  {boolean} owneronly si solo los desarrolladores pueden usar el comando por defecto es false
 	 */
 
-	constructor(name, description, alise, haspermission, argument, owneronly) {
+	constructor(name, alise, haspermission, argument, argumenterror, owneronly) {
 
 
 		/**
 		 * @param  {string} name El nombre del comando
 		 */
 		this.name = name
-
-		/**
-		 * @param  {string} description La descripción
-		 */
-		this.description = description
 
 		/**
 		 * @param  {Array<string>} alise
@@ -38,6 +35,7 @@ class Tatsumikoclass {
 		 */
 		this.haspermission = haspermission || []
 
+
 		/**
 		 * @param {Object[]} argument verifica los argumentos 
 		 * @param {number} argument.place se empieza a contar de 0 a 1 para vereficar si en lugar esta lo deseado 
@@ -47,26 +45,35 @@ class Tatsumikoclass {
 
 		this.argument = argument || []
 
+
+		/**
+		 * @param {string|boolean} argumenterror envia una respuesta si los args no existe
+		*/
+		this.argumenterror = argumenterror || false
+
 		/**
 		 * @param {boolean} oweneronly si solo los desarrolladores pueden usar el comando
 		*/
 		this.owneronly = owneronly || false
+
+
+
 	}
 	//[{ place: 0, type: "mention" }, { place: 1, type: "channel" }, { place: 1, type: "role" }]
-
 	/**
 	 * @param {string[]} args  los argumentos a verificar" 
 	 * @param  {} message a
-	 * @returns {boolean}
+	 * @returns {boolean} devuelve True si todos los argumentos fueron vereficados correctamente 
 	 */
 	checkargs(args, message) {
 		let valit = true
 
 		if (this.argument.length != 0) {
-			console.log(args.length);
 
-			if (args.length != 0) {
+			if (args.length > 0) {
+
 				for (let index = 0; index < this.argument.length; index++) {
+
 					const element = this.argument[index];
 
 					if (typeof element.place === "number") {
@@ -76,14 +83,16 @@ class Tatsumikoclass {
 							if (typeof element.response === "string") {
 
 								if (element.response.length !== 0) {
+
 									switch (element.type) {
 										case "mention":
 											let mention = args[element.place].match(/<@!?(.*[0-9])>/)
-											console.log(mention);
+											
 
 
-											if (mention = null || !message.mentions.has(mention[1])) {
-												console.log(message.mentions.has(mention[1]));
+											if (mention == null || !message.mentions.has(mention[1])) {
+
+
 												enviarmensaje(message, element.response)
 												valit = false
 												break
@@ -95,18 +104,17 @@ class Tatsumikoclass {
 
 											let channel = args[element.place].match(/<#!?(.*)>/)
 
-											if (channel = null || !message.mentions.channels.has(channel[1])) {
-
+											if (channel == null || !message.mentions.channels.has(channel[1])) {
 
 												enviarmensaje(message, element.response)
 												valit = false
 											}
 											break;
 										case "role":
-											let role = args[element.place].match(/<@!?(.*[0-9])>/)
+											let role = args[element.place].match(/<@&?(.*[0-9])>/)
+											
 
-
-											if (role = null || !message.mentions.roles.has(mention[1])) {
+											if (role == null || !message.mentions.roles.has(role[1])) {
 
 												enviarmensaje(message, element.response)
 												valit = false
@@ -116,14 +124,14 @@ class Tatsumikoclass {
 											break;
 
 										default:
-											const error = new Error(`en el index:${index}, type solo puede ser "channel","role","mention"`)
+											const error = new Error(`En el comando: ${this.name}, type solo puede ser "channel","role","mention" ,No existe como opción: ${element.type}`)
 
-											console.log(error);
-											break
+											
+											throw error
 
 									}
 								} else {
-									const error = new Error(`en el index:${index}, response no debe esta vacio`)
+									const error = new Error(`En ${element.name}, "response" no debe esta vacio`)
 									throw error
 								}
 							}
@@ -147,6 +155,7 @@ class Tatsumikoclass {
 					return valit
 				}
 			} else {
+				enviarmensaje(message, this.argumenterror)
 				console.log("error");
 			}
 

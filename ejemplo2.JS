@@ -1,34 +1,51 @@
-const {Tatsumikoclass} = require("./src/index")
+const { Tatsumikoclass } = require("../../Tatsumiko-modular/src/index")
+//const { Tatsumikoclass } = require("tatsumiko-modular")
 
-class Comando extends Tatsumikoclass {
-	constructor(){
-		//nombre del comando esto es obligatorio
-		let name = "nombre"
-		//descricion del comando es opcional lo pueden dejar vacio ""
-		let description= "Esto es una descricion"
-		//los alias del comando son opcionales lo pueden dejar vacio []
-		let alise = ["alias"]
-		//los permisos requerido para que funcione el bot 
-		//si no necesita ningun permiso especial lo puede dejar vacio []
-		let haspermission =["KICK_MEMBERS"]
-		//
-		//puedes vereficar el tipo de argumento que deseas "mention channel role"
-		let argument = [
-		{ place: 0, type: "mention",response:"aqui puedes enviar una respuesta opcional si no se encontro los argumentos deseados" }
-		, { place: 1, type: "channel" ,response:"a"}
-		, { place: 1, type: "role",response:"e" }
-		]
-
-		let owneronly = false
-
-		super(name, description, alise, haspermission, argument, owneronly)
-
+//Nombre de tu comando ejemplo ping
+class ping extends Tatsumikoclass {
+	constructor() {
+   
+	 //nombre del comando esto es obligatorio
+	 let name = "ping"
+   
+	 //los alias del comando son opcionales lo pueden dejar vacio []
+	 let alise = ["alias"]
+   
+	 //los permisos requerido para que funcione el bot
+	 //si no necesita ningun permiso especial lo puede dejar vacio []
+	 let haspermission = []
+   
+   
+	 let argument = [
+	  { 
+		//El lugar donde esta el argumento deseado
+		place: 0,
+   
+	  //puedes vereficar el tipo de argumento que deseas "mention channel role"
+	   type: "role",
+   
+	   //puede devolver una respuesta si el argumento enviado no es  el tipo que necesitas
+	   response: "no mencionaste a nadie"
+	  }
+	 ]
+	 //
+	 let argumenterror = "No pasaste argumentos"
+   
+	 //si solo los desarrolladores del bot pueden usar este  comando por defecto es false
+	 let owneronly = false
+   
+   
+   
+	  super(name, alise, haspermission, argument,argumenterror, owneronly)
+   
 	}
-	run(client, message, args, map){
-		//
-		this.checkargs(args,message)
-
-	}
-}
-
-module.exports = Comando
+	run(client, message, args) {
+   
+	 if (this.checkargs(args, message)) {
+	  message.channel.send("pong")
+	 }
+   
+   
+   }}
+   
+   module.exports = ping
