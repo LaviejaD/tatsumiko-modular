@@ -35,8 +35,11 @@ class ping extends Tatsumikoclass {
 	 let owneronly = false
    
    
+   //Tiempo de espera para usar le comando
+	 let cooldown = 5000
    
-	  super(name, alise, haspermission, argument,argumenterror, owneronly)
+   
+	 super(name, alise, haspermission, argument,argumenterror, owneronly,cooldown)
    
 	}
 	run(client, message, args) {
