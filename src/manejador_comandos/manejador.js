@@ -21,7 +21,7 @@ class Manejador {
 		this.owners = owners
 		this.answers = answers
 
-		console.log(this.answers);
+		
 
 		this.comando = this.existcmd()
 
@@ -121,7 +121,7 @@ class Manejador {
 			if (this.botpermisos(this.client, this.comando, this.message)) {
 
 
-				///this.comando.run(this.client, this.message, this.args)
+				this.comando.run(this.client, this.message, this.args)
 			}
 		}
 		else {

@@ -15,35 +15,29 @@ module.exports = (Filecomand, dir, file) => {
 
 	//}
 	//return true
-
+	let check = true
 	if (Filecomand.name.length === 0) {
+		check = false
 		let error = new Error(`el nombre esta vacio en el archivo:${dir} ${file}`)
 		throw error
 	}
-	if (Filecomand.owneronly === true || !Filecomand.owneronly) {
-
+	if(typeof Filecomand.name !== "string"){
+		check = false
+		let error = new Error(`En ${dir} ${file}, name debe ser string no:${typeof Filecomand.name}`)
+		
+		throw error
 	}
-
-	switch (typeof Filecomand.owneronly) {
-		case "boolean":
-			break;
-			
-		case "string":
-			let error = new Error(`owneronly:${dir} ${file}`)
-			throw error
-			
-		case "boolean":
-			let errora = new Error(`:${dir} ${file}`)
-			throw errora
-			
-		case "boolean":
-			let erroraa = new Error(`owneronly:${dir} ${file}`)
-			throw erroraa
-			
-
-		default:
-			break;
+	if(typeof Filecomand.owneronly !== "boolean"){
+		check = false
+		let error = new Error(`En ${Filecomand.name}, owneronly debe ser boolean no:${typeof Filecomand.owneronly}`)
+		
+		throw error
 	}
-
-	return true
+	
+	if (typeof Filecomand.cooldown != "number") {
+		check = false
+		let error = new Error(`En ${Filecomand.name}, cooldown debe ser number no:${typeof Filecomand.cooldown}`)
+		throw error
+	}
+	return check
 }

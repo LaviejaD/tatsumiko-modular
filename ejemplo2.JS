@@ -11,7 +11,7 @@ class ping extends Tatsumikoclass {
 	 //los alias del comando son opcionales lo pueden dejar vacio []
 	 let alise = ["alias"]
    
-	 //los permisos requerido para que funcione el bot
+	 //los permisos requerido para que funcione el comando 
 	 //si no necesita ningun permiso especial lo puede dejar vacio []
 	 let haspermission = []
    
@@ -21,7 +21,7 @@ class ping extends Tatsumikoclass {
 		//El lugar donde esta el argumento deseado
 		place: 0,
    
-	  //puedes vereficar el tipo de argumento que deseas "mention channel role"
+	  //puedes verificar el tipo de argumento que deseas "mention channel role string"
 	   type: "role",
    
 	   //puede devolver una respuesta si el argumento enviado no es  el tipo que necesitas

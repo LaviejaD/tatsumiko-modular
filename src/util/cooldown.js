@@ -6,7 +6,12 @@
 
 const cooldown = (s, id, c) => {
 	s.add(id)
+
+	
 	setTimeout(() => {
 		s.delete(id)
 	}, c)
 }
+
+
+module.exports = cooldown

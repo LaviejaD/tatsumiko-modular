@@ -10,14 +10,15 @@ class Tatsumikoclass {
 	 * @param  {Array<string>} alise 
 	 * @param  {Array<string>  } haspermission verifica si el bot y el usuario tienen los permisos necesarios  [ https://discord.com/developers/docs/topics/permissions ]
 	 * @param {Object[]} argument verifica los argumentos 
-	 * @param {number} argument.place se empieza a contar de 0 a 1 para vereficar si en lugar esta lo deseado 
+	 * @param {number} argument.place se empieza a contar de 0 a 1 para verificar si en lugar esta lo deseado 
 	 * @param {string}argument.type "channel", "role" , "mention" 
 	 * @param {string}argument.response envia una respuesta si no se en cuentra los argumentos deseados
 	 * @param {string} argumenterror envia una respuesta si los args no existen
 	 * @param  {boolean} owneronly si solo los desarrolladores pueden usar el comando por defecto es false
+	 * @param {number}cooldown  milisegundos de espera para usar el comando nueva mente
 	 */
 
-	constructor(name, alise, haspermission, argument, argumenterror, owneronly) {
+	constructor(name, alise, haspermission, argument, argumenterror, owneronly,cooldown) {
 
 
 		/**
@@ -38,8 +39,8 @@ class Tatsumikoclass {
 
 		/**
 		 * @param {Object[]} argument verifica los argumentos 
-		 * @param {number} argument.place se empieza a contar de 0 a 1 para vereficar si en lugar esta lo deseado 
-		 * @param {string}argument.type "channel", "role" , "mention" 
+		 * @param {number} argument.place se empieza a contar de 0 a 1 para verificar si en lugar esta lo deseado 
+		 * @param {string}argument.type "channel", "role" , "mention , string" 
 		   * @param {string}argument.response envia una respuesta si no se en cuentra los argumentos deseados
 		*/
 
@@ -55,8 +56,15 @@ class Tatsumikoclass {
 		 * @param {boolean} oweneronly si solo los desarrolladores pueden usar el comando
 		*/
 		this.owneronly = owneronly || false
-
-
+		/**
+		 * @param {number}cooldown  milisegundos de espera para usar el comando nueva mente
+		*/
+		this.cooldown = cooldown || 1000
+		
+		if (this.cooldown<1000) {
+			this.cooldown = 1000
+			
+		}
 
 	}
 	//[{ place: 0, type: "mention" }, { place: 1, type: "channel" }, { place: 1, type: "role" }]
@@ -85,6 +93,14 @@ class Tatsumikoclass {
 								if (element.response.length !== 0) {
 
 									switch (element.type) {
+										case"string":
+											let txt = args[element.place]
+											if (txt.length=== 0) {
+												enviarmensaje(message,element.response)
+												valit = false
+												break
+											}
+										break
 										case "mention":
 											let mention = args[element.place].match(/<@!?(.*[0-9])>/)
 											
@@ -124,7 +140,7 @@ class Tatsumikoclass {
 											break;
 
 										default:
-											const error = new Error(`En el comando: ${this.name}, type solo puede ser "channel","role","mention" ,No existe como opción: ${element.type}`)
+											const error = new Error(`En el comando: ${this.name}, type solo puede ser "channel","role","mention","string" ,No existe como opción: ${element.type}`)
 
 											
 											throw error

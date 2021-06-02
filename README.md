@@ -81,7 +81,7 @@ class ping extends Tatsumikoclass {
 		//El lugar donde esta el argumento deseado
 		place: 0,
    
-	  //puedes vereficar el tipo de argumento que deseas "mention channel role"
+	  //puedes verificar el tipo de argumento que deseas "mention channel role"
 	   type: "mention",
    
 	   //puede devolver una respuesta si el argumento enviado no es  el tipo que necesitas

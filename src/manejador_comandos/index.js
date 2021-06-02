@@ -3,7 +3,8 @@ const fs = require("fs");
 const propiedades = require("../util/propiedadescomando.js")
 const cooldown = require("../util/cooldown")
 const answers = require("../util/answers");
-const asnswers = require("../util/answers");
+const enviarmensaje = require("../util/enviarmensaje.js");
+
 class Tatsumiko {
 	/**  classs Tatsumiko 	  
 	 * @constructor
@@ -80,12 +81,10 @@ class Tatsumiko {
 	 * @param  {Object} req aqui estas todos los string  XD
 	 */
 	answers(req){
-		this.answersxd =asnswers(req)
-		console.log(this.answersxd);
+		this.answersxd =answers(req)
+		
 	}
-	cooldown(){
-		this.cooldowntrue = true
-	}
+	
 	/**
 	 * @param  {Function} client se necesita  el client de discord 
 	 * @param  {Object} message se necesita pasar discord.message
@@ -104,10 +103,17 @@ class Tatsumiko {
 				let args = message.content.slice(prefix.length).trim().split(/ +/g)
 				let command = args.shift().toLowerCase()
 
-				let Manejador = require("./manejador.js")
-			    let comando =new Manejador(this.map, command, message, client, args, this.ownersid,this.answersxd).comando
-				console.log(comando.name);
+				if (!this.cooldownset.has(`id:${message.author.id},${command}`)) {
+					let Manejador = require("./manejador.js")
+			   		let comando =new Manejador(this.map, command, message, client, args, this.ownersid,this.answersxd).comando
+					
+					cooldown(this.cooldownset,`id:${message.author.id},${command}`,comando.cooldown)
+					
+				}else{
+					enviarmensaje(message,this.answersxd.cooldown)
+				}
 
+				
 
 			}
 		}
