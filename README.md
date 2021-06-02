@@ -49,32 +49,43 @@ client.on('ready', () => {
 
 ```
 
-   
 ---
 ## tatsumiko metodos
 ---
 ### tatsumiko.answers
 #### una forma de dar respuesta por defecto
+
 ```
+
 const {Tatsumiko} = require("tatsumiko-modular")
 const tatsumiko = new  Tatsumiko(__dirname,"carpeta",["IDs"])
 
-//estas son las respuesta por defecto pero pueden ser personalisadas
+//estas son las respuesta por defecto 
+
 const respuesta = {
-	desarrolladores:"Solo los desarrolladores pueden usar este comando",
-	faltadepermisosBot:"Me faltan permisos para ejecutar este comando",
-	faltadepermisosUsuario:"Te faltan permisos para usar el comando"
-	cooldown:"Tienes que esperar un momento para volver a usar el comando"
+ desarrolladores:"Solo los desarrolladores pueden usar este comando",
+ faltadepermisosBot:"Me faltan permisos para ejecutar este comando",
+ faltadepermisosUsuario:"Te faltan permisos para usar el comando"
+ cooldown:"Tienes que esperar un momento para volver a usar el comando"
 
 } 
-tatsumiko.answers(respuesta)
+
+//tambien pueden ser cambiadas a gusto
+const personalizadas = {
+ desarrolladores:"esto es una respuesta personalizadad"
+}
+tatsumiko.answers(personalizadas)
 ```
+
 ---
+
 ##   Tatsumikoclass
+
 ---
+
 ## Estrutura de los comandos
 
-### los comando deben de seguir esta estrura obligatoria para que funcione Tatsumiko 
+### los comando deben de seguir esta estrura obligatoria para que funcione Tatsumiko
 
 ```
 const { Tatsumikoclass } = require("tatsumiko-modular")
@@ -137,6 +148,7 @@ class ping extends Tatsumikoclass {
    
    module.exports = ping
 ```
-
+---
 # me puedes contactar por
+
 - Discord: OnlyD#5221
