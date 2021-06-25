@@ -14,7 +14,9 @@ class Tatsumiko {
 	 */
 	constructor(dirname, dir, ownersid) {
 
-
+		/**
+		 * Ids de los dessaroladores
+		 */
 		this.ownersid = ownersid;
 		/**
 		 * carpeta de los comandos
@@ -29,13 +31,11 @@ class Tatsumiko {
 		this.cooldownset = new Set()
 
 		this.answersxd = answers()
-		
-		//console.log(this.answersxd);
+
 	}
 	/** verifica la ubicacion de la carpeta de los comandos regresa error si la carpeta no se encuentra o no existe
 	 */
 	check_dir() {
-
 
 		if (fs.existsSync(this.dir)) {
 			this.mapcmd()
@@ -55,10 +55,10 @@ class Tatsumiko {
 		files.forEach(file => {
 
 			if (file.endsWith(".js")) {
-				
+
 
 				let Filecomand = require(path.join(this.dir, file))
-				let filecomand= new Filecomand()
+				let filecomand = new Filecomand()
 				//console.log(Filecomand.name);
 
 
@@ -80,11 +80,11 @@ class Tatsumiko {
 	/**
 	 * @param  {Object} req aqui estas todos los string  XD
 	 */
-	answers(req){
-		this.answersxd =answers(req)
-		
+	answers(req) {
+		this.answersxd = answers(req)
+
 	}
-	
+
 	/**
 	 * @param  {Function} client se necesita  el client de discord 
 	 * @param  {Object} message se necesita pasar discord.message
@@ -105,15 +105,15 @@ class Tatsumiko {
 
 				if (!this.cooldownset.has(`id:${message.author.id},${command}`)) {
 					let Manejador = require("./manejador.js")
-			   		let comando =new Manejador(this.map, command, message, client, args, this.ownersid,this.answersxd).comando
-					
-					cooldown(this.cooldownset,`id:${message.author.id},${command}`,comando.cooldown)
-					
-				}else{
-					enviarmensaje(message,this.answersxd.cooldown)
+					let comando = new Manejador(this.map, command, message, client, args, this.ownersid, this.answersxd).comando
+
+					cooldown(this.cooldownset, `id:${message.author.id},${command}`, comando.cooldown)
+
+				} else {
+					enviarmensaje(message, this.answersxd.cooldown)
 				}
 
-				
+
 
 			}
 		}

@@ -20,7 +20,6 @@ class Tatsumikoclass {
 
 	constructor(name, alise, haspermission, argument, argumenterror, owneronly,cooldown) {
 
-
 		/**
 		 * @param  {string} name El nombre del comando
 		 */
@@ -36,7 +35,6 @@ class Tatsumikoclass {
 		 */
 		this.haspermission = haspermission || []
 
-
 		/**
 		 * @param {Object[]} argument verifica los argumentos 
 		 * @param {number} argument.place se empieza a contar de 0 a 1 para verificar si en lugar esta lo deseado 
@@ -45,7 +43,6 @@ class Tatsumikoclass {
 		*/
 
 		this.argument = argument || []
-
 
 		/**
 		 * @param {string|boolean} argumenterror envia una respuesta si los args no existe
@@ -104,15 +101,11 @@ class Tatsumikoclass {
 										case "mention":
 											let mention = args[element.place].match(/<@!?(.*[0-9])>/)
 											
-
-
 											if (mention == null || !message.mentions.has(mention[1])) {
-
 
 												enviarmensaje(message, element.response)
 												valit = false
 												break
-
 											}
 
 											break;
@@ -129,22 +122,17 @@ class Tatsumikoclass {
 										case "role":
 											let role = args[element.place].match(/<@&?(.*[0-9])>/)
 											
-
 											if (role == null || !message.mentions.roles.has(role[1])) {
 
 												enviarmensaje(message, element.response)
 												valit = false
 												break
-
 											}
 											break;
 
 										default:
 											const error = new Error(`En el comando: ${this.name}, type solo puede ser "channel","role","mention","string" ,No existe como opción: ${element.type}`)
-
-											
 											throw error
-
 									}
 								} else {
 									const error = new Error(`En ${element.name}, "response" no debe esta vacio`)
@@ -155,8 +143,6 @@ class Tatsumikoclass {
 								const error = new Error(`en el index:${index}, type  debe ser de tipo: string`)
 								throw error
 							}
-
-
 						}
 						else {
 							const error = new Error(`en el index:${index}, type  debe ser de tipo: string`)
@@ -174,17 +160,12 @@ class Tatsumikoclass {
 				enviarmensaje(message, this.argumenterror)
 				console.log("error");
 			}
-
 		}
 		else {
 			const error = new Error(`No se encontraron argumentos para "argument"`)
 			throw error
 		}
-
 	}
-
-
-
 }
 
 module.exports = Tatsumikoclass

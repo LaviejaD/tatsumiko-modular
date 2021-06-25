@@ -18,7 +18,7 @@
 
 ## Ejemplo de uso
 
-```
+``` javascript
 const {Tatsumiko} = require("tatsumiko-modular")
 const discord = require("discord.js")
 const client = new discord.Client()
@@ -55,7 +55,7 @@ client.on('ready', () => {
 ### tatsumiko.answers
 #### una forma de dar respuesta por defecto
 
-```
+``` javascript
 
 const {Tatsumiko} = require("tatsumiko-modular")
 const tatsumiko = new  Tatsumiko(__dirname,"carpeta",["IDs"])
@@ -87,7 +87,7 @@ tatsumiko.answers(personalizadas)
 
 ### los comando deben de seguir esta estrura obligatoria para que funcione Tatsumiko
 
-```
+``` javascript
 const { Tatsumikoclass } = require("tatsumiko-modular")
 
 //Nombre de tu comando ejemplo ping
