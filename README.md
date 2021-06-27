@@ -102,7 +102,9 @@ class ping extends Tatsumikoclass {
    
 	 //los permisos requerido para que funcione el bot
 	 //si no necesita ningun permiso especial lo puede dejar vacio []
-	 let haspermission = []
+	 //con type especificamos cual permiso necesita el usuario para usar el comando
+	 // con bot especificamos si el bot tambien necesita ese permiso para ejecutar el comando
+	 let haspermission = [{type:"message",bot:true}}]
    
    
 	 let argument = [
@@ -110,7 +112,7 @@ class ping extends Tatsumikoclass {
 		//El lugar donde esta el argumento deseado
 		//[A,B,C]
 		// 0 1 2
-		//tomaria 0 que seria A
+		
 		place: 0,
    
 	  //puedes verificar el tipo de argumento que deseas "mention channel role string"
@@ -134,10 +136,10 @@ class ping extends Tatsumikoclass {
    
 	}
 	run(client, message, args) {
-		//es el client pasado con anterioridad
+		//es el client de discord.js
 		//message es el objecto del evento message
 		//args son los argumentos 
-   		//this.checkargs() con esos podes verificar los argumentos deseados regresa true si no hubo algun error
+   		//this.checkargs() con esos podes verificar los argumentos deseados, regresa true si no hubo algun error
    
 	 if (this.checkargs(args, message)) {
 	  message.channel.send("pong")

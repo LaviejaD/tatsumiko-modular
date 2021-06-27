@@ -13,7 +13,7 @@ class ping extends Tatsumikoclass {
    
 	 //los permisos requerido para que funcione el comando 
 	 //si no necesita ningun permiso especial lo puede dejar vacio []
-	 let haspermission = []
+	 let haspermission = [{type:"message",bot:true}]
    
    
 	 let argument = [

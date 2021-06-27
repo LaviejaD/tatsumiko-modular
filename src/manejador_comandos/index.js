@@ -106,8 +106,10 @@ class Tatsumiko {
 				if (!this.cooldownset.has(`id:${message.author.id},${command}`)) {
 					let Manejador = require("./manejador.js")
 					let comando = new Manejador(this.map, command, message, client, args, this.ownersid, this.answersxd).comando
-
-					cooldown(this.cooldownset, `id:${message.author.id},${command}`, comando.cooldown)
+					if(typeof comando.cooldown != "undefined"){
+						cooldown(this.cooldownset, `id:${message.author.id},${command}`, comando.cooldown)
+					}
+					
 
 				} else {
 					enviarmensaje(message, this.answersxd.cooldown)

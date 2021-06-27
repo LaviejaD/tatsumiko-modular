@@ -1,7 +1,7 @@
 {
   "name": "tatsumiko-modular",
-  "version": "1.2.0",
-  "description": "Herramienta para facilitar la creacion de comandos moulares  para discord en español",
+  "version": "1.3.1",
+  "description": "Herramienta para facilitar la creacion de comandos modulares  para discord en español",
   "main": "./src/index.js",
   "scripts": {
     "start": "node ./src/index.js",

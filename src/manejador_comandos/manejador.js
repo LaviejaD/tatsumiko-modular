@@ -21,7 +21,7 @@ class Manejador {
 		this.owners = owners
 		this.answers = answers
 
-		
+
 
 		this.comando = this.existcmd()
 
@@ -30,13 +30,13 @@ class Manejador {
 
 				if (this.isowner()) {
 					this.star()
-					
+
 				}
 
 			}
 			else {
 				this.star()
-				
+
 			}
 		}
 	}
@@ -81,9 +81,28 @@ class Manejador {
 	}
 	checkperms() {
 		let check = true
-		
+
 		for (let index = 0; index < this.comando.haspermission.length; index++) {
-			if (!this.message.member.hasPermission(this.comando.haspermission[index])) {
+
+			if (this.message.member.hasPermission(this.comando.haspermission[index].type)) {
+				console.log("usp");
+				
+
+
+				if (this.comando.haspermission[index].bot) {
+					if (!this.message.guild.member(this.client.user).hasPermission(this.comando.haspermission[index].type)) {
+						
+
+						enviarmensaje(this.message, this.answers.faltadepermisosBot)
+						
+						check = false
+						break
+					}
+				}
+
+			}
+			else {
+				enviarmensaje(this.message, this.answers.faltadepermisosUsuario)
 				check = false
 				break
 			}
@@ -116,17 +135,12 @@ class Manejador {
 		}
 	}
 	star() {
-		if (this.checkperms(this.message,this.comando)) {
+		if (this.checkperms(this.message, this.comando)) {
 
-			if (this.botpermisos(this.client, this.comando, this.message)) {
-
-
-				this.comando.run(this.client, this.message, this.args)
-			}
+			//if (this.botpermisos(this.client, this.comando, this.message)) {}
+			this.comando.run(this.client, this.message, this.args)
 		}
-		else {
-			enviarmensaje(this.message, this.answers.faltadepermisosUsuario)
-		}
+		
 
 
 	}
