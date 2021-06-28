@@ -18,7 +18,8 @@
     "type": "git",
     "url": "https://github.com/LaviejaD/tatsumiko-modular"
   },
-  "dependencies": {
-    "jsdoc": "^3.6.6"
+  "dependencies": {},
+  "devDependencies": {
+    "jsdoc": "^3.6.7"
   }
 }
