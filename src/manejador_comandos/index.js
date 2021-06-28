@@ -51,7 +51,7 @@ class Tatsumiko {
 	mapcmd() {
 
 		let files = fs.readdirSync(this.dir)
-
+		console.log("------------------------------");
 		files.forEach(file => {
 
 			if (file.endsWith(".js")) {
@@ -67,15 +67,20 @@ class Tatsumiko {
 
 					if (this.map.get(filecomand.name) === undefined) {
 						this.map.set(filecomand.name, filecomand);
+						console.log(`Comando "${filecomand.name}" cargado correctamente`);
 					} else {
+						
 						let error = new Error(`ya existe un comando con el mismo nombre en: ${path.join(this.dir, file)}`)
+						
 						throw error
 					}
 				}
 
 
 			}
+			
 		})
+		console.log("------------------------------");
 	}
 	/**
 	 * @param  {Object} req aqui estas todos los string  XD

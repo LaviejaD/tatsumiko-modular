@@ -85,7 +85,7 @@ class Manejador {
 		for (let index = 0; index < this.comando.haspermission.length; index++) {
 
 			if (this.message.member.hasPermission(this.comando.haspermission[index].type)) {
-				console.log("usp");
+				
 				
 
 
